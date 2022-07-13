@@ -24,8 +24,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    private String string;
-
     @Override
     public UserDto createUser(UserDto userDto) {
 
