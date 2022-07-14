@@ -4,6 +4,8 @@ import com.practicePoc.payload.UserDto;
 import java.util.List;
 
 public interface UserService {
+
+    UserDto registerNewUser(UserDto  userDto);
     UserDto createUser(UserDto userDto);
 
     UserDto userUpdate(UserDto userDto, Long id) ;

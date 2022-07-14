@@ -1,8 +1,11 @@
 package com.practicePoc.payload;
 
+import com.practicePoc.entity.Role;
 import lombok.Data;
 
 import javax.validation.constraints.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 public class UserDto {
@@ -23,5 +26,7 @@ public class UserDto {
 
     @NotEmpty(message = "about.required ")
     private String about;
+
+    private Set<RoleDto> roles=new HashSet<>();
 
 }
