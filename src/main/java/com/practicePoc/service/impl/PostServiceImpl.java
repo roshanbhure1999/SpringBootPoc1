@@ -150,5 +150,17 @@ public class PostServiceImpl implements PostService {
         return postResponse;
     }
 
+    @Override
+    public List<PostDto> findByTitleContent(String title) {
+        List<Post> byTitleContaining = this.postRepository.findByTitleContent("%" + title + "%");
+        if (byTitleContaining.isEmpty()) {
+            throw new UserException("No data found for this given name " + title, HttpStatus.BAD_REQUEST);
+        }
+        List<PostDto> collect = byTitleContaining.stream().map((post) ->
+                this.modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
+
+        return collect;
+    }
+
 
 }

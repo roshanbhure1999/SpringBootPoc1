@@ -25,11 +25,18 @@ public class UserServiceImpl implements UserService {
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
+    public UserDto registerNewUser(UserDto userDto) {
+        User user = this.dtoToEntity(userDto);
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+        User save = this.userRepository.save(user);
+        return this.entityToDto(save);
+    }
+
+    @Override
     public UserDto createUser(UserDto userDto) {
 
         return entityToDto(userRepository.save(dtoToEntity(userDto)));
     }
-
     @Override
     public UserDto userUpdate(UserDto userDto, Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new UserException("user", "id"));
@@ -37,26 +44,22 @@ public class UserServiceImpl implements UserService {
         UserDto userDto1 = entityToDto(save);
         return userDto1;
     }
-
     @Override
     public UserDto getById(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new UserException("User Not found this "+id ," id"));
         return entityToDto(user);
     }
-
     @Override
     public List<UserDto> getAllUser() {
         List<User> allUser = userRepository.findAll();
-        List<UserDto> userDtos = allUser.stream().map(user -> entityToDto(user)).collect(Collectors.toList());
+        List<UserDto> userDtos= allUser.stream().map(user -> entityToDto(user)).collect(Collectors.toList());
         return userDtos;
     }
-
     @Override
     public void deleteById(Long id) {
-        User user = this.userRepository.findById(id).orElseThrow(()->new UserException("User Not found this "+id ,"id"));
+        User user=this.userRepository.findById(id).orElseThrow(()->new UserException("User Not found this "+id ,"id"));
         this.userRepository.delete(user);
     }
-
     private User dtoToEntity(UserDto userDto) {
         User user = new User();
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
@@ -64,7 +67,6 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(userDto, user);
         return user;
     }
-
     private UserDto entityToDto(User user) {
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(user, userDto);

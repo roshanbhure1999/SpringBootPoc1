@@ -122,4 +122,13 @@ public class PostController {
     }
 
 
+    @GetMapping("/posts/search_all_column/{content}")
+    public ResponseEntity<List<PostDto>> findByTitleContent(@PathVariable String content) {
+        List<PostDto> postDtos = this.postService.findByTitleContent(content);
+        return new ResponseEntity<List<PostDto>>(postDtos, HttpStatus.OK);
+    }
+
+
+
+
 }
