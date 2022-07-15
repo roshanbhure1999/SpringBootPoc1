@@ -1,5 +1,6 @@
 package com.practicePoc.service;
 
+import com.practicePoc.entity.Post;
 import com.practicePoc.payload.PostDto;
 import com.practicePoc.payload.PostResponse;
 
@@ -7,7 +8,7 @@ import java.util.List;
 
 public interface PostService {
 
-    PostDto createPost(PostDto postDto,Long userId,Long categoryId);
+    PostDto createPost(PostDto postDto, Long userId, Long categoryId);
 
     PostDto updatePost(PostDto postDto, Long id);
 
@@ -24,4 +25,6 @@ public interface PostService {
     List<PostDto> searchPosts(String keyword);
 
     PostResponse getAllPostPagination(int pageNumber, int pageSize, String sortBy, String sortDirection);
+
+    List<PostDto> findByTitleContent(String title);
 }
